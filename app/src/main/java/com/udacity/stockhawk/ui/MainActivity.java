@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final int STOCK_LOADER = 0;
     public static final String SELECTED_SYMBOL = "selected_symbol";
+    public static final String SELECTED_HISTORY = "selected_history";
     @SuppressWarnings("WeakerAccess")
     @BindView(R.id.recycler_view)
     RecyclerView stockRecyclerView;
@@ -46,16 +47,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private StockAdapter adapter;
 
     @Override
-    public void onClick(String symbol) {
+    public void onClick(Cursor cursor) {
         Intent intent = new Intent(this, DetailedViewActivity.class);
+        int symbolColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
+        int historyColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_HISTORY);
+        String symbol = cursor.getString(symbolColumn);
+        String history = cursor.getString(historyColumn);
         intent.putExtra(SELECTED_SYMBOL, symbol);
+        intent.putExtra(SELECTED_HISTORY, history);
         startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
