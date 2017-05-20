@@ -1,5 +1,8 @@
 package com.udacity.stockhawk.ui;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ public class DetailedViewActivity extends AppCompatActivity {
 
     private String mSymbol;
     private String mHistory;
+    public static final String CHART_HISTORY = "chart_history";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,17 @@ public class DetailedViewActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(mSymbol);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ArrayList<Entry> chartEntries = this.generateChartEntries(mHistory);
 
+        Bundle fragmentBundle = new Bundle();
+        fragmentBundle.putString(CHART_HISTORY, mHistory);
 
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        DetailFragment fragment = new DetailFragment();
+        fragment.setArguments(fragmentBundle);
+        fragmentTransaction.add(R.id.activity_detailed_view, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -43,18 +55,5 @@ public class DetailedViewActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private ArrayList<Entry> generateChartEntries(String history){
-        ArrayList<Entry> result = new ArrayList<>();
-        String[] dataPairs = history.split("\n");
-
-        for (String pair : dataPairs) {
-            String[] entry = pair.split(", ");
-            Entry entry1 = new Entry(Float.valueOf(entry[0]), Float.valueOf(entry[1]));
-            result.add(entry1);
-        }
-        Collections.reverse(result);
-        return result;
     }
 }
