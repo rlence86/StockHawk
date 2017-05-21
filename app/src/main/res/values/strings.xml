@@ -39,4 +39,9 @@
     <string name="appwidget_text">StockHawk</string>
     <string name="empty_list">Widget list is empty</string>
 
+    <string name="error_message">Error message</string>
+    <string name="item_quote_example_text" translatable="false">GOOG</string>
+
+    <string name="stock_value">Stock value</string>
+
 </resources>

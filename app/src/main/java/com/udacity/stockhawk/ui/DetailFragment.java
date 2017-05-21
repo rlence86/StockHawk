@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.LineScatterCandleRadarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.utilities.ChartEntriesManager;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 
 public class DetailFragment extends Fragment {
     private LineChart mLineChart;
-    private ArrayList<Entry> mEntries;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,10 +47,25 @@ public class DetailFragment extends Fragment {
         Bundle bundle = getArguments();
         String history = bundle.getString(DetailedViewActivity.CHART_HISTORY);
         ArrayList<Entry> chartEntries = ChartEntriesManager.generateChartEntries(history);
-        LineDataSet set1 = new LineDataSet(chartEntries, "DataSet 1");
+        LineDataSet set1 = new LineDataSet(chartEntries, getString(R.string.stock_value));
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(set1);
         LineData data = new LineData(dataSets);
         mLineChart.setData(data);
+
+        XAxis xAxis = mLineChart.getXAxis();
+        xAxis.setDrawLabels(false);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAxisLineWidth(1.5f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        YAxis yAxisRight = mLineChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+        YAxis yAxis = mLineChart.getAxisLeft();
+        yAxis.setDrawGridLines(false);
+        yAxis.setAxisLineWidth(1.5f);
+        yAxis.setTextSize(12f);
+
     }
 }
