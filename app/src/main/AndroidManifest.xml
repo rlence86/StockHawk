@@ -42,7 +42,7 @@
 
         <receiver
             android:name=".widget.StockWidgetProvider"
-            android:label="@string/appwidget_label">
+            android:label="@string/appwidget_text">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
