@@ -6,7 +6,8 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="@dimen/list_item_padding"
-    android:paddingEnd="@dimen/list_item_padding">
+    android:paddingEnd="@dimen/list_item_padding"
+    android:id="@+id/item_quote_elem">
 
     <TextView
         android:id="@+id/symbol"
